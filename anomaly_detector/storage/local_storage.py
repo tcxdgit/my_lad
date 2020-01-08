@@ -26,7 +26,7 @@ class LocalStorageDataSink(StorageSink, DataCleaner):
                 json.dump(data, fp)
         else:
             for item in data:
-                _LOGGER.info("Anomaly: %d, Anmaly score: %f" % (item["anomaly"], item["anomaly_score"]))
+                _LOGGER.info("Anomaly: %d, Anomaly score: %f" % (item["anomaly"], item["anomaly_score"]))
 
 
 class LocalStorageDataSource(StorageSource, DataCleaner):

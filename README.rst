@@ -38,3 +38,8 @@ Documentation
 
 TODO
 
+Reference
+-------------
+https://github.com/AICoE/log-anomaly-detector
+
+
