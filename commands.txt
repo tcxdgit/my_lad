@@ -1,0 +1,10 @@
+pip install git+https://github.com/compmonks/SOMPY.git
+pip install opentracing_instrumentation
+pip install pandas
+pip install pyyaml
+pip install sklearn
+pip install matplotlib
+pip install ipdb
+pip install gensim
+pip install jaeger_client
+pip install click

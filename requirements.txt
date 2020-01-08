@@ -1,0 +1,9 @@
+opentracing_instrumentation
+pandas
+pyyaml
+sklearn
+matplotlib
+ipdb
+gensim
+jaeger_client
+click
