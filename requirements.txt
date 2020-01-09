@@ -1,9 +1,12 @@
 opentracing_instrumentation
 pandas
 pyyaml
+git+https://github.com/compmonks/SOMPY.git
 sklearn
 matplotlib
 ipdb
 gensim
 jaeger_client
 click
+pytest
+numpy

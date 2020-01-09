@@ -4,7 +4,7 @@ from anomaly_detector.config import Configuration
 import uuid
 from enum import Enum
 from anomaly_detector.core import DetectorPipeline
-from anomaly_detector.fact_store.app import db, create_app
+# from anomaly_detector.fact_store.app import db, create_app
 
 
 class Spec(Enum):
@@ -109,12 +109,12 @@ def pipeline():
     pipeline.clear()
 
 
-@pytest.fixture(scope='module')
-def app():
-    """Create a Flask app context for the tests."""
-    app = create_app()
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite://"
-    return app
+# @pytest.fixture(scope='module')
+# def app():
+#     """Create a Flask app context for the tests."""
+#     app = create_app()
+#     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite://"
+#     return app
 
 
 @pytest.fixture(scope="module")
@@ -128,13 +128,13 @@ def test_client(app):
     ctx.pop()
 
 
-@pytest.fixture(scope='module')
-def database(app):
-    """Create a Flask app context for the tests."""
-    db.init_app(app)
-    with app.app_context():
-        db.create_all()
-    return db
+# @pytest.fixture(scope='module')
+# def database(app):
+#     """Create a Flask app context for the tests."""
+#     db.init_app(app)
+#     with app.app_context():
+#         db.create_all()
+#     return db
 
 
 def generate_feedback(anomaly="False"):

@@ -2,10 +2,10 @@
 from tests.e2e.util import OpenShift, template_deployer, delete_template, \
     delete_objects
 import pytest
-from kubernetes import client as kubeclient
-from openshift.dynamic import DynamicClient
+# from kubernetes import client as kubeclient
+# from openshift.dynamic import DynamicClient
 import yaml
-from openshift.dynamic.exceptions import UnauthorizedError
+# from openshift.dynamic.exceptions import UnauthorizedError
 import logging
 from os import path, makedirs
 
@@ -193,7 +193,7 @@ def lad(openshift: OpenShift, config: dict, factstore: list) -> list:
         try:
             oc_fs_route = openshift.get_route_by_name(route_name)
             host = oc_fs_route['spec']['host']
-        except Exception as e:
+        except Exception:
             logging.warning("Could not retrieve factstore route.")
             host = "no-host"
     factstore_url = "http://{}".format(host)

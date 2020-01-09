@@ -2,6 +2,7 @@
 import os
 import json
 import logging
+import random
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,3 +48,17 @@ json.dump(data_abnormal, f_abnormal)
 
 f_normal.close()
 f_abnormal.close()
+
+
+train_filename = "bgl_train.json"
+with open(os.path.join("../validation_data", train_filename), "w", encoding="utf-8") as f_train:
+    num = 0.05 * len(data_normal)
+    num = int(num)
+    _LOGGER.info("%d normal logs picked", num)
+    noise = random.sample(data_abnormal, num)
+    data_train = data_normal + noise
+    random.shuffle(data_train)
+    json.dump(data_train, f_train)
+
+
+

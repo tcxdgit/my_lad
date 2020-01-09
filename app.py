@@ -5,6 +5,7 @@ from anomaly_detector.facade import Facade
 
 CONFIGURATION_PREFIX = "LAD"
 
+
 @click.command()
 @click.option("--job-type",
               default="all",
@@ -31,7 +32,7 @@ def run(job_type: str, config_yaml: str, single_run: bool, tracing_enabled: bool
     click.echo("Starting...")
     config = Configuration(prefix=CONFIGURATION_PREFIX, config_yaml=config_yaml)
     anomaly_detector = Facade(config=config, tracing_enabled=tracing_enabled)
-    click.echo("Created jobtype {}".format(job_type))
+    click.echo("Created job type {}".format(job_type))
 
     if job_type == "train":
         click.echo("Performing training...")
