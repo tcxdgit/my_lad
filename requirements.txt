@@ -10,3 +10,4 @@ jaeger_client
 click
 pytest
 numpy
+coverage

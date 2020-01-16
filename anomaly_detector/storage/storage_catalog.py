@@ -1,14 +1,14 @@
 """Storage Catalog class."""
 # from anomaly_detector.storage.kafka_storage import KafkaSink
+import logging
 from anomaly_detector.storage.local_storage import LocalStorageDataSource, LocalStorageDataSink
 from anomaly_detector.storage.local_directory_storage import LocalDirectoryStorageDataSource
 from anomaly_detector.storage.stdout_sink import StdoutSink
 # from anomaly_detector.storage.es_storage import ElasticSearchDataSink, ElasticSearchDataSource
 from anomaly_detector.storage.std_storage import StdStorageDataSource
-import logging
 
 
-class StorageCatalog(object):
+class StorageCatalog:
     """Internal api and client should use storage proxy for data access.."""
 
     def __init__(self, config, storage_api):
@@ -17,7 +17,8 @@ class StorageCatalog(object):
         if storage_api in self._class_method_choices:
             self.storage_api = storage_api
         else:
-            raise ValueError("Unsupported storage provider used {}".format(storage_api))
+            raise ValueError("Unsupported storage provider used {}".format(
+                storage_api))
 
     @classmethod
     def _localdir_datasource_api(cls, config):
@@ -77,4 +78,5 @@ class StorageCatalog(object):
 
     def get_storage_api(self):
         """Storage api."""
-        return self._class_method_choices[self.storage_api].__get__(None, self.__class__)(self.config)
+        return self._class_method_choices[
+            self.storage_api].__get__(None, self.__class__)(self.config)

@@ -1,16 +1,16 @@
 """Openshift Testing Utility."""
 import time
 from typing import Callable, Optional
+from urllib import request as url_request
+import logging
 import pytest
 import requests
-from openshift.dynamic import exceptions, DynamicClient, ResourceInstance, \
-    ResourceField
+# from openshift.dynamic import exceptions, DynamicClient, ResourceInstance, \
+#     ResourceField
 import yaml
-import logging
-from urllib import request as url_request
-from openshift.dynamic.exceptions import NotFoundError, ConflictError
+# from openshift.dynamic.exceptions import NotFoundError, ConflictError
 
-
+'''
 class OpenShift:
     """Interaction with OpenShift within a project."""
 
@@ -513,6 +513,8 @@ class OpenShift:
                           "objects given".format(kind))
             raise Exception("Resource does not exist.")
         return resources
+
+'''
 
 
 def wait_for_condition(success_cond: Callable,

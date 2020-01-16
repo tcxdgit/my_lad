@@ -1,6 +1,5 @@
 """Pytest Configurations and Fixtures."""
-from tests.e2e.util import OpenShift, template_deployer, delete_template, \
-    delete_objects
+from tests.e2e.util import OpenShift, template_deployer, delete_template, delete_objects
 import pytest
 # from kubernetes import client as kubeclient
 # from openshift.dynamic import DynamicClient
@@ -70,7 +69,7 @@ def config(request) -> dict:
         config_def = yaml.safe_load(stream)
     return config_def
 
-
+'''
 @pytest.fixture(scope="session")
 def openshift(config: dict):
     """Provide openshift instance."""
@@ -115,7 +114,7 @@ def openshift(config: dict):
 
     # The fixture return value
     return openshift
-
+'''
 
 @pytest.fixture(scope="session")
 def mysql_persistent(openshift: OpenShift, config: dict) -> list:

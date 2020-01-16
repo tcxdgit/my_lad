@@ -11,7 +11,8 @@ TASKS_IN_QUEUE = 1
 @pytest.mark.core
 @pytest.mark.pipeline
 def test_train_command(cnf_hadoop_2k, pipeline):
-    """Test case for validating that when we train a model and add it to task queue that it will run."""
+    """Test case for validating that when we train a model
+     and add it to task queue that it will run."""
     storage_adapter = SomStorageAdapter(config=cnf_hadoop_2k, feedback_strategy=None)
     model_adapter = SomModelAdapter(storage_adapter)
     train_job = SomTrainJob(node_map=2, model_adapter=model_adapter)

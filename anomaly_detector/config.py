@@ -3,8 +3,8 @@
 import os
 # import distutils
 import logging
-import yaml
 from distutils import util
+import yaml
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,7 +16,8 @@ def join_model_path(config):
 
 def join_w2v_model_path(config):
     """Construct a word2vec model path."""
-    config.W2V_MODEL_PATH = os.path.join(config.MODEL_DIR, config.W2V_MODEL_FILE)
+    config.W2V_MODEL_PATH = os.path.join(config.MODEL_DIR,
+                                         config.W2V_MODEL_FILE)
 
 
 def check_or_create_model_dir(config):
@@ -59,24 +60,27 @@ class Configuration:
 
     MODEL_STORE = ""
     MODEL_STORE_PATH = "anomaly-detection/models/"
-    # Number of seconds specifying how far to the past to go to load log entries for training
+    # Number of seconds specifying how far to the
+    # past to go to load log entries for training
     TRAIN_TIME_SPAN = 900
     # Maximum number of entries for training loaded from backend storage
     TRAIN_MAX_ENTRIES = 315448
     # Number of SOM training iterations
     TRAIN_ITERATIONS = 315448
-    # If true, re-traing the models
+    # If true, re-train the models
     TRAIN_UPDATE_MODEL = False
     # Set the window size for word2Vec training
     TRAIN_WINDOW = 5
     # Set the length of the encoded log vectors
     TRAIN_VECTOR_LENGTH = 25
-    # number of jobs to use to parallelize the training, should match cpu resource limit
-    PARALLELISM = 2
+    # number of jobs to use to parallelize the training,
+    # should match cpu resource limit
+    PARALLELISM = 1
 
     # Threshold used to decide whether an entry is an anomaly
     INFER_ANOMALY_THRESHOLD = 3.1
-    # Number of seconds specifying how far in the past to go to load log entries for inference
+    # Number of seconds specifying how far in the past to
+    # go to load log entries for inference
     INFER_TIME_SPAN = 60
     # Number of inferences before retraining the models
     INFER_LOOPS = 10
@@ -91,7 +95,8 @@ class Configuration:
     S3_BUCKET = ""
     # ElasticSearch endpoint URL
     ES_ENDPOINT = ""
-    # Path to a directory where cert and key (es.crt and es.key) are stored for authentication
+    # Path to a directory where cert and key (es.crt and es.key)
+    # are stored for authentication
     ES_CERT_DIR = ""
     # If True, connect using ssl
     ES_USE_SSL = True
@@ -101,7 +106,8 @@ class Configuration:
     ES_TARGET_INDEX = ""
     # ElasticSearch index name where log entries will be pulled from
     ES_INPUT_INDEX = ""
-    # When customer has custom log format. We will need to perform custom processing.
+    # When customer has custom log format.
+    # We will need to perform custom processing.
     ES_QUERY = ""
     ES_VERSION = 5
     KF_BOOTSTRAP_SERVER = ""
@@ -128,11 +134,13 @@ class Configuration:
         # For backward compatibility
         self.load_from_env()
         if config_yaml is not None:
-            with open(config_yaml) as f:
-                yaml_data = yaml.load(f, Loader=yaml.FullLoader)
-                for prop in self.__class__.__dict__.keys():
+            with open(config_yaml) as f_yaml:
+                yaml_data = yaml.load(f_yaml, Loader=yaml.FullLoader)
+                for prop, _ in self.__class__.__dict__.items():
                     attr = getattr(self, prop)
-                    if prop.isupper() and prop.endswith("_CALLABLE") and callable(attr):
+                    if (prop.isupper() and
+                            prop.endswith("_CALLABLE") and
+                            callable(attr)):
                         attr()
                     elif prop.isupper() and prop in list(yaml_data.keys()):
                         self.set_property(prop, yaml_data[prop])
@@ -145,19 +153,19 @@ class Configuration:
 
     def load(self):
         """Load the configuration."""
-        _LOGGER.info("Loading %s" % self.__class__.__name__)
+        _LOGGER.info("Loading %s", self.__class__.__name__)
         self.load_from_env()
 
     def load_from_env(self):
         """Load the configuration from environment."""
-        for prop in self.__class__.__dict__.keys():
+        for prop, _ in self.__class__.__dict__.items():
             if not prop.isupper():
                 continue
             env = "%s_%s" % (self.prefix, prop)
             val = os.environ.get(env)
             self.set_property(prop, val)
 
-        for prop in self.__class__.__dict__.keys():
+        for prop, _ in self.__class__.__dict__.items():
             attr = getattr(self, prop)
             if prop.isupper() and prop.endswith("_CALLABLE") and callable(attr):
                 attr()
@@ -174,9 +182,10 @@ class Configuration:
             elif typ is str:
                 setattr(self, prop, str(val))
             elif typ is bool:
-                if type(val) is bool:
+                if isinstance(val, bool):
                     setattr(self, prop, val)
                 else:
                     setattr(self, prop, bool(util.strtobool(val)))
             else:
-                raise Exception("Incorrect type for %s (%s) loaded " % (prop, typ))
+                raise Exception("Incorrect type for %s (%s) loaded "
+                                % (prop, typ))

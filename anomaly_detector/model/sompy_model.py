@@ -1,9 +1,9 @@
 """SOMPY model."""
-from anomaly_detector.model.base_model import BaseModel
-import numpy as np
 import logging
-import sompy
 from multiprocessing import Pool
+import sompy
+import numpy as np
+from anomaly_detector.model.base_model import BaseModel
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -17,16 +17,23 @@ class SOMPYModel(BaseModel):
         self.config = config
 
     def train(self, inp, map_size, iterations, parallelism):
-        """Train the SOM model."""
+        """Train the SOM model.
+        iterations: may be useful in other models
+        """
         mapsize = [map_size, map_size]
-        som = sompy.SOMFactory.build(inp, mapsize, initialization=self.config.SOMPY_INIT)
+        som = sompy.SOMFactory.build(inp,
+                                     mapsize,
+                                     initialization=self.config.SOMPY_INIT)
         if not self.config:
             som.train(n_job=parallelism)
         else:
-            som.train(n_job=parallelism, train_rough_len=self.config.SOMPY_TRAIN_ROUGH_LEN,
+            som.train(n_job=parallelism,
+                      train_rough_len=self.config.SOMPY_TRAIN_ROUGH_LEN,
                       train_finetune_len=self.config.SOMPY_TRAIN_FINETUNE_LEN)
             # train_rough_len=100,train_finetune_len=5
-        self.model = som.codebook.matrix.reshape([map_size, map_size, inp.shape[1]])
+        self.model = som.codebook.matrix.reshape([map_size,
+                                                  map_size,
+                                                  inp.shape[1]])
 
     def get_anomaly_score(self, logs, parallelism):
         """Get Anomaly Score."""
@@ -38,11 +45,12 @@ class SOMPYModel(BaseModel):
 
     def calculate_anomaly_score(self, log):
         """Compute a distance of a log entry to elements of SOM."""
-        # convert log into vector using same word2vec model (here just going to grab from existing)
+        # convert log into vector using same word2vec model
+        # (here just going to grab from existing)
         dist_smallest = np.inf
-        for x in range(self.model.shape[0]):
-            for y in range(self.model.shape[1]):
-                dist = np.linalg.norm(self.model[x][y] - log)
+        for _xx in range(self.model.shape[0]):
+            for _yy in range(self.model.shape[1]):
+                dist = np.linalg.norm(self.model[_xx][_yy] - log)
                 if dist < dist_smallest:
                     dist_smallest = dist
         return dist_smallest

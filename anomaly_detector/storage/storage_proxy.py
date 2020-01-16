@@ -15,9 +15,13 @@ class StorageProxy(StorageSource, StorageSink):
         """Create storage data source and sinks to talk to storage backend."""
         super().__init__(config)
         self.source = StorageCatalog(config=config,
-                                     storage_api=config.STORAGE_DATASOURCE + self.SUFFIX_SOURCE).get_storage_api()
+                                     storage_api=(config.STORAGE_DATASOURCE
+                                                  + self.SUFFIX_SOURCE)
+                                     ).get_storage_api()
         self.sink = StorageCatalog(config=config,
-                                   storage_api=config.STORAGE_DATASINK + self.SUFFIX_SINK).get_storage_api()
+                                   storage_api=(config.STORAGE_DATASINK
+                                                + self.SUFFIX_SINK)
+                                   ).get_storage_api()
 
     def retrieve(self, storage_attribute):
         """Retrieve data from backend storage."""

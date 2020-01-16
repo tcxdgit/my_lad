@@ -20,7 +20,7 @@ def cnf_hadoop_2k():
     config = Configuration()
     config.STORAGE_DATASOURCE = "local"
     config.STORAGE_DATASINK = "stdout"
-    config.LS_INPUT_PATH = "validation_data/Hadoop_2k.json"
+    config.LS_INPUT_PATH = "../validation_data/Hadoop_2k.json"
     return config
 
 
@@ -30,8 +30,8 @@ def cnf_wrong_settings():
     config = Configuration()
     config.STORAGE_DATASOURCE = "local.source"
     config.STORAGE_DATASINK = "local.sink"
-    config.LS_INPUT_PATH = "validation_data/orders-500.log"
-    config.LS_OUTPUT_PATH = "validation_data/results-oct4.1.txt"
+    config.LS_INPUT_PATH = "../validation_data/orders-500.log"
+    config.LS_OUTPUT_PATH = "../validation_data/results-oct4.1.txt"
     return config
 
 
@@ -41,7 +41,7 @@ def cnf_100K_events():
     config = Configuration()
     config.STORAGE_DATASOURCE = "local"
     config.STORAGE_DATASINK = "stdout"
-    config.LS_INPUT_PATH = "validation_data/log_anomaly_detector-100000-events.json"
+    config.LS_INPUT_PATH = "../validation_data/log_anomaly_detector-100000-events.json"
     return config
 
 
@@ -51,7 +51,7 @@ def cnf_localdir():
     config = Configuration()
     config.STORAGE_DATASOURCE = "localdir"
     config.STORAGE_DATASINK = "stdout"
-    config.LS_INPUT_PATH = "validation_data/test_sample_input"
+    config.LS_INPUT_PATH = "../validation_data/test_sample_input"
     return config
 
 
@@ -61,8 +61,8 @@ def cnf_local_500():
     config = Configuration()
     config.STORAGE_DATASOURCE = "local"
     config.STORAGE_DATASINK = "local"
-    config.LS_INPUT_PATH = "validation_data/orders-500.log"
-    config.LS_OUTPUT_PATH = "validation_data/results-oct4.1.txt"
+    config.LS_INPUT_PATH = "../validation_data/orders-500.log"
+    config.LS_OUTPUT_PATH = "../validation_data/results-oct4.1.txt"
     return config
 
 

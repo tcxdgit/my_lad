@@ -1,7 +1,7 @@
 """Base model class."""
-from anomaly_detector.exception import ModelLoadException, ModelSaveException
-from sklearn.externals import joblib
 import os
+from sklearn.externals import joblib
+from anomaly_detector.exception import ModelLoadException, ModelSaveException
 
 
 class BaseModel:
@@ -16,7 +16,8 @@ class BaseModel:
     def load(self, source):
         """Load a model from disk."""
         if not os.path.isfile(source):
-            raise ModelLoadException("Could not load a model. File %s does not exist" % source)
+            raise ModelLoadException(
+                "Could not load a model. File %s does not exist" % source)
 
         try:
             loaded_model = joblib.load(source)

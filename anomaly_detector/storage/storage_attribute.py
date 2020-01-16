@@ -2,10 +2,12 @@
 
 
 class DefaultStorageAttribute:
-    """Local Storage Attribute only requires false_positive data which is optional."""
+    """Local Storage Attribute only
+    requires false_positive data which is optional."""
 
     def __init__(self, false_data=None):
-        """Local Storage only takes an optional field of false_positive."""
+        """Local Storage only takes an
+        optional field of false_positive."""
         self._false_data = false_data
 
     @property
@@ -14,16 +16,21 @@ class DefaultStorageAttribute:
         return self._false_data
 
     @false_data.setter
-    def false_data(self, x):
+    def false_data(self, _data):
         """Get false positive data."""
-        self._false_data = x
+        self._false_data = _data
 
 
 # class ESStorageAttribute(DefaultStorageAttribute):
-#     """Elastic Search Attributes require false positive data and time_range and number of entries to pull."""
+#     """Elastic Search Attributes require false positive data
+#      and time_range and number of entries to pull."""
 #
-#     def __init__(self, time_range: int, number_of_entries: int, false_data=None):
-#         """Set initial properties for required fields when fetching data from ES."""
+#     def __init__(self,
+#                  time_range: int,
+#                  number_of_entries: int,
+#                  false_data=None):
+#         """Set initial properties for required fields
+#          when fetching data from ES."""
 #         super().__init__(false_data)
 #         self.__time_range = time_range
 #         self.__number_of_entries = number_of_entries

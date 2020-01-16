@@ -1,4 +1,5 @@
-"""Som Storage Adapter for interfacing with custom storage for custom application."""
+"""Som Storage Adapter for interfacing
+with custom storage for custom application."""
 import logging
 from anomaly_detector.adapters import BaseStorageAdapter
 from anomaly_detector.decorator.utils import latency_logger
@@ -25,8 +26,8 @@ class SomStorageAdapter(BaseStorageAdapter):
         if len(data) == 0:
             logging.info("There are no logs in last %s seconds", timespan)
             return None, None
-        else:
-            return data, raw
+
+        return data, raw
 
     @latency_logger(name="SomStorageAdapter")
     def load_data(self, config_type):
@@ -39,12 +40,12 @@ class SomStorageAdapter(BaseStorageAdapter):
             return self.retrieve_data(timespan=self.config.TRAIN_TIME_SPAN,
                                       max_entry=self.config.TRAIN_MAX_ENTRIES,
                                       false_positive=false_data)
-        elif config_type == "infer":
+        if config_type == "infer":
             return self.retrieve_data(timespan=self.config.INFER_TIME_SPAN,
                                       max_entry=self.config.INFER_MAX_ENTRIES,
                                       false_positive=false_data)
-        else:
-            raise Exception("Not Supported option . config_type not in ['infer','train']")
+        raise Exception(
+            "Not Supported option . config_type not in ['infer','train']")
 
     @latency_logger(name="SomStorageAdapter")
     def persist_data(self, df):
@@ -52,5 +53,6 @@ class SomStorageAdapter(BaseStorageAdapter):
         self.storage.store_results(df)
 
     def __getattr__(self, name):
-        """Delegate all methods from config as a passthrough proxy into configurations."""
+        """Delegate all methods from config
+        as a passthrough proxy into configurations."""
         return getattr(self.config, name)

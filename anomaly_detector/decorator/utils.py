@@ -1,4 +1,5 @@
-"""Simple decorator to measure a function and output the length of time the function took in seconds."""
+"""Simple decorator to measure a function and
+output the length of time the function took in seconds."""
 import time
 import logging
 from functools import wraps
@@ -12,10 +13,11 @@ def latency_logger(name):
 
         @wraps(func)
         def wrapper(*args, **kwargs):
-            s = time.time()
+            tic = time.time()
             rtn = func(*args, **kwargs)
-            e = time.time()
-            log.info("{}  function {}() took {} s".format(logname, func.__name__, e - s))
+            toc = time.time()
+            log.info("%s  function %s() took %s s",
+                     logname, func.__name__, toc - tic)
             return rtn
         return wrapper
     return decorate

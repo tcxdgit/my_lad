@@ -30,14 +30,20 @@ class DataCleaner:
         """Remove all none alphabetical characters from message strings."""
         return "".join(
             re.findall("[a-zA-Z]+", line)
-        )  # Leaving only a-z in there as numbers add to anomalousness quite a bit
+        )
+        # Leaving only a-z in there
+        # as numbers add to anomalousness quite a bit
 
     @classmethod
     def _preprocess(cls, data):
-        """Provide preprocessing for the data before running it through W2V and SOM."""
-        def to_str(x):
+        """Provide preprocessing for the data
+         before running it through W2V and SOM."""
+        def to_str(_data):
             """Convert all non-str lists to string lists for Word2Vec."""
-            ret = " ".join([str(y) for y in x]) if isinstance(x, list) else str(x)
+            if isinstance(_data, list):
+                ret = " ".join([str(y) for y in _data])
+            else:
+                ret = str(_data)
             return ret
 
         for col in data.columns:
@@ -58,4 +64,5 @@ class DataCleaner:
                         es_data["orig_message"] = es_data["message"]
                         es_data["message"] = es_data["message"].split("] ")[1]
                 except Exception as ex:
-                    logging.debug("Error {} in log formatter: {}".format(ex, config.ES_LOG_FORMATTER))
+                    logging.debug("Error %s in log formatter: %s",
+                                  ex, config.ES_LOG_FORMATTER)

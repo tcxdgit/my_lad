@@ -1,14 +1,16 @@
 """Feedback strategy for custom behaviour of false positive input."""
 import types
-import requests
 import logging
+import requests
 
 
-class FeedbackStrategy():
-    """Custom Feedback strategy for overwriting behaviour of application to provide configurable api."""
+class FeedbackStrategy:
+    """Custom Feedback strategy for overwriting
+    behaviour of application to provide configurable api."""
 
     def __init__(self, config, func=None):
-        """Initial setup of configuration and users can provide custom feedback_function to execute."""
+        """Initial setup of configuration and users
+        can provide custom feedback_function to execute."""
         self.config = config
         self.uniq_items = set()
         if func:
@@ -20,15 +22,17 @@ class FeedbackStrategy():
         self.uniq_items = set()
         if self.config.FACT_STORE_URL:
             try:
-                response = requests.get(url=self.config.FACT_STORE_URL + "/api/false_positive")
+                response = requests.get(
+                    url=self.config.FACT_STORE_URL + "/api/false_positive")
                 result_data = response.json()
                 false_positives = []
                 for msg in result_data["feedback"]:
                     self.uniq_items.add(msg)
                     noise = [{"message": msg}] * self.config.FREQ_NOISE
                     false_positives.extend(noise)
-                logging.info("Added noise {} messages ".format(len(false_positives)))
+                logging.info("Added noise %s messages ",
+                             len(false_positives))
                 return false_positives
-            except Exception as ex:
+            except Exception:
                 logging.error("Fact Store is either down or not functioning")
         return None

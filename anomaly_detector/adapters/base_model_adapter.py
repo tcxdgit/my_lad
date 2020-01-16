@@ -1,4 +1,5 @@
-"""Base Model Adaptor Class - As we try different models and developers can contribute their custom code."""
+"""Base Model Adaptor Class -
+As we try different models and developers can contribute their custom code."""
 
 from abc import ABCMeta, abstractmethod
 

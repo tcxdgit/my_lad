@@ -2,3 +2,8 @@
 amun/__pycache__/
 *.pyc
 docs/build/**
+*/models/*
+models/*
+models_backup/*
+bgl_*.json
+bgl_*.txt

@@ -1,10 +1,9 @@
 """Validates if training was successful."""
+import logging
+import pytest
 from anomaly_detector.adapters.som_model_adapter import SomModelAdapter
 from anomaly_detector.adapters.som_storage_adapter import SomStorageAdapter
 from anomaly_detector.core.job import SomTrainJob
-import logging
-
-import pytest
 
 CONFIGURATION_PREFIX = "LAD"
 
@@ -16,7 +15,7 @@ def test_vocab_length(cnf_hadoop2k_w2v_params):
     storage_adapter = SomStorageAdapter(config=cnf_hadoop2k_w2v_params, feedback_strategy=None)
     model_adapter = SomModelAdapter(storage_adapter=storage_adapter)
     tc = SomTrainJob(node_map=2, model_adapter=model_adapter)
-    result, dist = tc.execute()
+    tc.execute()
 
     assert len(model_adapter.w2v_model.model["message"].wv.vocab) == 141
 
@@ -25,10 +24,11 @@ def test_vocab_length(cnf_hadoop2k_w2v_params):
 @pytest.mark.w2v_model
 def test_log_similarity(cnf_hadoop2k_w2v_params):
     """Check that two words have consistent similar logs after training."""
-    storage_adapter = SomStorageAdapter(config=cnf_hadoop2k_w2v_params, feedback_strategy=None)
+    storage_adapter = SomStorageAdapter(config=cnf_hadoop2k_w2v_params,
+                                        feedback_strategy=None)
     model_adapter = SomModelAdapter(storage_adapter=storage_adapter)
-    tc = SomTrainJob(node_map=2, model_adapter=model_adapter)
-    result, dist = tc.execute()
+    # tc = SomTrainJob(node_map=2, model_adapter=model_adapter)
+    # result, dist = tc.execute()
     log_1 = 'INFOmainorgapachehadoopmapreducevappMRAppMasterExecutingwithtokens'
     answer_1 = 'INFOmainorgapachehadoopmapreducevappMRAppMasterCreatedMRAppMasterforapplicationappattempt'
 

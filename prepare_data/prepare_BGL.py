@@ -1,4 +1,4 @@
-# coding:utf-8
+"""Prepare data using BGL dataset"""
 import os
 import json
 import logging
@@ -8,7 +8,8 @@ _LOGGER = logging.getLogger(__name__)
 
 BGL_dir = "/root/nlp/tcxia/data/LOGDetection"
 
-# log_format = '<Label> <Timestamp> <Date> <Node> <Time> <NodeRepeat> <Type> <Component> <Level> <Content>'
+# log_format:
+# '<Label> <Timestamp> <Date> <Node> <Time> <NodeRepeat> <Type> <Component> <Level> <Content>'
 
 log_file = os.path.join(BGL_dir, "BGL.log")
 
@@ -30,7 +31,8 @@ with open(log_file, "r", encoding="utf-8") as f_log:
 
     for line in f_log.readlines():
         line_tmp = line.strip()
-        message_field = " ".join(line.split(" ")[5:])
+        # message_field = " ".join(line.split(" ")[5:])
+        message_field = " ".join(line.split(" ")[9:])
         message_field = message_field.rstrip("\n")
         if line_tmp.startswith("-"):
             # f_normal.write(line_tmp+"\n")
@@ -52,7 +54,7 @@ f_abnormal.close()
 
 train_filename = "bgl_train.json"
 with open(os.path.join("../validation_data", train_filename), "w", encoding="utf-8") as f_train:
-    num = 0.05 * len(data_normal)
+    num = 0.005 * len(data_normal)
     num = int(num)
     _LOGGER.info("%d normal logs picked", num)
     noise = random.sample(data_abnormal, num)
