@@ -1,12 +1,13 @@
-import os
+"""restful api implement based on gunicorn """
 import logging
-
-from app import app
-from gunicorn.app.base import BaseApplication
 from flask import Flask
+from gunicorn.app.base import BaseApplication
+
+from app import APP
 
 
 class Application(BaseApplication):
+    """ implement of application based on gunicorn """
     def __init__(self, app, config) -> None:
         self.app = app
         self.config = config
@@ -23,11 +24,14 @@ class Application(BaseApplication):
     def load(self) -> Flask:
         return self.app
 
-    def stop(self, *args, **kwargs):
+    @staticmethod
+    def stop():
+        """Shutting down AI restAPI service"""
         logging.info("Shutting down AI restAPI service")
 
-gunicorn_app = Application(
-    app=app,
+
+GUNICORN_APP = Application(
+    app=APP,
     config={
         "bind": "0.0.0.0:8888",
         "workers": 5,
@@ -38,4 +42,4 @@ gunicorn_app = Application(
 
 
 if __name__ == '__main__':
-    gunicorn_app.run()
+    GUNICORN_APP.run()
